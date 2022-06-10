@@ -1,5 +1,5 @@
-# React Todo List
+# React Social Media Site
 
-Example code for the Form up Session.
+Example social media site. 
 
-additional files show stages of development linked from the presentaion speaker notes.
+ability to add messages, add names, add avatars, count likes, and button to nuke the lot 
