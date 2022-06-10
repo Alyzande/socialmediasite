@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import Form from "react-bootstrap/Form"
 import Button from "react-bootstrap/Button"
-
 import toastr from 'toastr';
 import 'toastr/build/toastr.min.css';
 
@@ -11,9 +10,11 @@ function Add(props){
   
   const [formValues, changeFormValues]=useState({
     id:0,
-    description:"",
-    completed:false,
+    posterName:"",
+    postContent:"",
+    imgurl:"",
   });
+
 
   toastr.options = {
     "closeButton": false,
@@ -35,30 +36,28 @@ function Add(props){
 
   const handleChange= (event) => {
     const newState={...formValues};
-    if (event.target.name === "completed"){
-      newState[event.target.name] = !formValues.completed;
-    } else {
-      newState[event.target.name] = event.target.value;
-    }
+    newState[event.target.name] = event.target.value;
     changeFormValues(newState)
   }
 
   const submitHandler = (event) => {
     event.preventDefault();
-    props.onSubmit(formValues.id, formValues.description, formValues.completed);
-    toastr["success"]("Todo added", "Success")
+    console.log(formValues.imgurl);
+    props.onSubmit(formValues.id, formValues.posterName, formValues.postContent, formValues.imgurl);
+    toastr["success"]("Post added", "Success")
     changeFormValues({
       id: 0,
-      description:"",
-      completed: false
+      posterName:"",
+      postContent:"",
+      imgurl:"",
     })
   }
 
   return (
       <div>
         <Form onSubmit={(event) => submitHandler(event)}>
-          <Form.Group controlId="taskID">
-            <Form.Label> Task ID</Form.Label>
+          <Form.Group controlId="userID">
+            <Form.Label> Post ID</Form.Label>
             <Form.Control 
               name="id" 
               type="number"
@@ -66,26 +65,37 @@ function Add(props){
               onChange={(event)=>handleChange(event)} 
             />
           </Form.Group>
-
-          <Form.Group controlId="taskDescription">
-            <Form.Label> Description</Form.Label>
+          
+          <Form.Group controlId="posterName">
+            <Form.Label> Name</Form.Label>
             <Form.Control 
-              name="description" 
+              name="posterName" 
               type="text"
-              value={formValues.description}
+              value={formValues.posterName}
+              onChange={(event)=>handleChange(event)} 
+            />
+          </Form.Group>
+
+          <Form.Group controlId="postContent">
+            <Form.Label> Post Content</Form.Label>
+            <Form.Control 
+              name="postContent" 
+              type="text"
+              value={formValues.postContent}
               onChange={(event)=>handleChange(event)}  
             />
           </Form.Group>
 
-          <Form.Group controlId="completed">
-            <Form.Check 
-              type="checkbox"
-              name="completed"
-              label="Completed?"
-              value={formValues.completed}
-              onChange={(event)=>handleChange(event)} 
+          <Form.Group controlId="imgurl">
+            <Form.Label> Image URL</Form.Label>
+            <Form.Control 
+              name="imgurl" 
+              type="text"
+              value={formValues.imgurl}
+              onChange={(event)=>handleChange(event)}  
             />
           </Form.Group>
+
           
           <Button variant="primary" type="submit">
             Submit

@@ -1,41 +1,47 @@
-import React, {useState} from 'react';
-import Table from 'react-bootstrap/Table';
+import React from 'react';
+import Card from 'react-bootstrap/Card';
+import { Container } from 'react-bootstrap';
+import Row from 'react-bootstrap/Row';
+import Likes from './likes';
+import DeletePost from './DeletePost';
+
 import './App.css';
 
 function View(props){
+console.log(props.todos);
 
-  const buildRows = () =>  {
+  const buildCards = () =>  {
     return props.todos.map((current) => (
-      <tr key={current.id}>
-        <td>
-          {current.id}
-        </td>
-        <td>
-          {current.task}
-        </td>
-        <td>
-          {current.complete ? "yes" : "no"}
-        </td>
-      </tr>
+    
+
+      <Card style={{ width: '300px' }}>
+  <Card.Img variant="top" src={`${current.imgurl}`} className='thumbnail'/>
+  <Card.Body>
+    <Card.Title>{current.posterName}</Card.Title>
+    <Card.Text>
+      Post ID: {current.id} 
+    </Card.Text>
+    <Card.Text>
+    {current.postContent}
+    </Card.Text>
+    <Card.Footer>
+      <Likes />
+      <br />
+    <DeletePost />
+    </Card.Footer>
+  </Card.Body>
+</Card>
     )
     )
   }
 
-
     return (
       <>
-        <Table striped bordered hover>
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Task</th>
-              <th>complete</th>
-            </tr>
-          </thead>
-          <tbody>
-            {buildRows()}
-          </tbody>
-        </Table>
+      <Container>
+      <Row xs="auto">
+        {buildCards()}
+        </Row>
+        </Container>
       </>
     );
 

@@ -1,3 +1,11 @@
+body {
+  background-color: #e6e6e6;
+}
+
+.container {
+  background-color: white;
+}
+
 .App {
   text-align: center;
 }
@@ -36,3 +44,12 @@
     transform: rotate(360deg);
   }
 }
+
+.thumbnail {
+  width: 60px;
+}
+
+.larger {
+  font-size: 30px;
+}
+

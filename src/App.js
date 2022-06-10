@@ -7,17 +7,22 @@ import Nav from 'react-bootstrap/Nav'
 import './App.css';
 import View from './View'
 import Add from './Add';
+import SMLogo from './smlogo.jpg';
+import Button from 'react-bootstrap/Button'
+
 
 function App(){
-  const [todos, changeTodos] = useState([ 
-    { id: 1, task: "make static data", complete: false },
-    { id: 2, task: "make dynamic data", complete: false }
-  ])
+  const [todos, changeTodos] = useState([])
 
-  const updateTodoItems = (id,description,complete) => {
-    const item ={id, task: description, complete};
+  const updatePosts = (id,posterName, postContent,imgurl) => {
+     const item ={id, posterName, postContent, imgurl};
     localStorage.setItem("list", JSON.stringify([...todos, item]))
     changeTodos((state)=> [...state, item]);
+  }
+
+  const deleteAllposts = () => {
+    localStorage.setItem("list", JSON.stringify([]));
+    changeTodos([]);
   }
 
   useEffect(() => {
@@ -26,19 +31,22 @@ function App(){
   },[])
 
     return (
-      <div>
-
+      <div><Container>
         <Navbar bg="light" expand="md">
-          <Navbar.Brand>Social Media Site</Navbar.Brand>
+        <Navbar.Brand>
+        <Link to="/">
+          <img src={SMLogo} alt="SM logo"/>
+          </Link>
+        </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="mr-auto">
-              <Link className="nav-link" to="/">Home</Link>
               <Link className="nav-link" to="/view">View</Link>
               <Link className="nav-link" to="/add">Add</Link>
             </Nav>
           </Navbar.Collapse>
         </Navbar>
+        </Container>
 
         <Container>
           <Routes>
@@ -51,10 +59,12 @@ function App(){
             } />
             
             <Route path="/add" element={
-              <Add  onSubmit={(id,description,complete) =>
-              updateTodoItems(id,description,complete)} />
+              <Add  onSubmit={(id,posterName,postContent,imgurl) =>
+              updatePosts(id,posterName,postContent,imgurl)} />
             } />
            </Routes>
+<br />
+        <Button variant="outline-danger" onClick={() => deleteAllposts()}>Nuke</Button>
         </Container>
       </div>
     );
